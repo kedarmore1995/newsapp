@@ -5,7 +5,7 @@ export class SpinnerGif extends Component {
   render() {
     return (
       <div className='text-center'>
-        <img src={loading} alt="loading" />
+        <img className='my-3' src={loading} alt="loading" style={{width: '5%'}} />
       </div>
     )
   }
