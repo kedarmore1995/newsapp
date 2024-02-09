@@ -43,7 +43,7 @@ export class News extends Component {
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
-      loading: false,
+      loading: false
     });
     this.props.setProgress(100);
   }
@@ -65,32 +65,31 @@ export class News extends Component {
   //   this.updateNews();
   // };
   fetchMoreData = async () => {
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
     this.setState({
       page: this.state.page + 1
     })
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-     let data = await fetch(url);
+    let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
 
     this.setState({
       articles: this.state.articles.concat(parsedData.articles),
-      totalResults: parsedData.totalResults,
-      loading: false,
+      totalResults: parsedData.totalResults
     });
   }
-
+  
 
   render() {
     return (
       <>
-        <h1 className="text-center">NewsInd - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h1>
-        {this.state.loading && <SpinnerGif/>}
+        <h1 className="text-center" style={{marginTop: '70px'}}>NewsInd - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h1>
+        {this.state.loading && <SpinnerGif />}
         <InfiniteScroll
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
           hasMore={this.state.articles.length !== this.state.totalResults}
-          loader={<SpinnerGif/>}
+          loader={<SpinnerGif />}
         >
           <div className="container">
             <div className="row">
@@ -106,7 +105,7 @@ export class News extends Component {
                     source={element.source.name}
                   />
                 </div>
-            })}
+              })}
             </div>
           </div>
         </InfiniteScroll>
